@@ -5,6 +5,7 @@ import { Button, Typography, makeStyles } from '@material-ui/core';
 import { useCopyToClipboard } from 'react-use';
 import { saveAs } from 'file-saver';
 import { useEffect } from 'react';
+import { PastedFilename } from '../createSecret/Image';
 
 const useStyles = makeStyles(() => ({
   pre: {
@@ -31,7 +32,7 @@ const Secret = ({
   const classes = useStyles();
 
   useEffect(() => {
-    fileName &&
+    fileName && fileName !== PastedFilename &&
       saveAs(
         new Blob([secret], {
           type: 'application/octet-stream',
@@ -40,7 +41,18 @@ const Secret = ({
       );
   }, [fileName, secret]);
 
-  if (fileName) {
+  if (fileName === PastedFilename) {
+    const blob = new Blob([secret], {
+      type: 'application/octet-stream',
+    });
+
+    return (
+      <div>
+        <img src={URL.createObjectURL(blob)} alt={fileName}/>
+      </div>
+    );
+  }
+  else if (fileName) {
     return (
       <div>
         <Typography variant="h4">{t('File downloaded')}</Typography>
