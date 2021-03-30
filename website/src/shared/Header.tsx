@@ -23,6 +23,7 @@ export const Header = () => {
   const base = process.env.PUBLIC_URL || '';
   const home = base + '/';
   const upload = base + '/upload';
+  const image = base + '/image';
   const classes = useStyles();
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -51,6 +52,14 @@ export const Header = () => {
             color="secondary"
           >
             Upload
+          </Button>
+          <Button
+            component={RouterLink}
+            to={image}
+            variant="contained"
+            color="secondary"
+          >
+            Image
           </Button>
         </Box>
       </Toolbar>
